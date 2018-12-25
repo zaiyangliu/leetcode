@@ -2,7 +2,7 @@ class Solution{
 public:
   int reverse(int x){
     int flag = 1;
-    if(x <= Integer.MIN_VALUE)
+    if(x <= INT_MIN)
       return 0;
     if(x < 0){
       x = -x;
@@ -14,7 +14,7 @@ public:
       y *= 10;
       y += x % 10;
     }
-    if(y > Integer.MAX_VALUE)
+    if(y > INT_MAX)
       return 0;
     else
       return (int) y * flag;
