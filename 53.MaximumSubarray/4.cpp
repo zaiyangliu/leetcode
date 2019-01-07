@@ -4,22 +4,22 @@ public:
     return maxSub(nums, 0, nums.size() - 1);
   }
 private:
-  int maxSub(vector<int>& nums, int l, int r){
-    if(l > r){
+  int maxSub(vector<int>& nums, int left, int right){
+    if(left > right){
       return INT_MIN;
     }
-    int m = l + (r - 1)/2;
-    int lmax = maxSub(nums, l, m - 1);
-    int rmax = maxSub(nums, m + 1, r);
-    int ml = 0, mr = 0;
-    for(int i = m - 1, sum = 0; i >= l; i--){
+    int m = left + (right - left)/2;
+    int left_max = maxSub(nums, left, m - 1);
+    int right_max = maxSub(nums, m + 1, right);
+    int max_left = 0, max_right = 0;
+    for(int i = m - 1, sum = 0; i >= left; i--){
       sum += nums[i];
-      ml = max(ml, sum);
+      max_left = max(max_left, sum);
     }
-    for(int i = m + 1, sum = 0; i <= r; ++i){
+    for(int i = m + 1, sum = 0; i <= right; ++i){
       sum += nums[i];
-      mr = max(mr, sum);
+      max_right = max(max_right, sum);
     }
-    return max(max(lmax, rmax), ml + mr + nums[m]);
+    return max(max(left_max, right_max), max_left + max_right + nums[m]);
   }
 };
