@@ -23,3 +23,27 @@ public:
         
     }
 };
+//迭代方法
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        stack<TreeNode* > S;
+        //if(!root) return ans;
+        while(1){
+            while(root){
+                S.push(root);
+                root = root->left;
+            }
+            if(S.empty()) break;
+            TreeNode* temp;
+            temp = S.top();
+            S.pop();
+            ans.push_back(temp->val);
+            if(temp->right){
+                root = temp->right;
+            }
+        }
+        return ans;
+    }
+};
