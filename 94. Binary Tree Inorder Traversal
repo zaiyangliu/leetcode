@@ -61,3 +61,24 @@ public:
     }
 
 };
+//easy iterative
+class Solution {
+public:
+    vector<int> ans;
+    vector<int> inorderTraversal(TreeNode* root) {
+        TreeNode* T = root;
+        stack<TreeNode*> S;
+        while(1){
+            while(T){
+                S.push(T);
+                T = T->left;
+            }
+            if(S.empty()) break;
+            T = S.top();
+            S.pop();
+            ans.push_back(T->val);
+            T = T->right;
+        }
+        return ans;
+    }
+};
