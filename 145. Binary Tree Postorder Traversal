@@ -1,0 +1,78 @@
+class Solution {//递归
+public:
+    vector<int> ans;
+    vector<int> postorderTraversal(TreeNode* root) {
+        if(root){
+            postorderTraversal(root->left);
+            postorderTraversal(root->right);
+            ans.push_back(root->val);
+        }
+        return ans;
+    }
+    
+};
+
+以下是迭代版本（1）：
+class Solution {
+public:
+    vector<int> ans;
+    stack<TreeNode*> S;
+    vector<int> postorderTraversal(TreeNode* root) {
+        if(!root) return ans; //如果root为空直接返回ans，注意ans的初始值为空。
+        S.push(root);   //如果不空，root进栈
+        TreeNode* p = nullptr; //p是临时指针，初始化为空指针
+        while(!S.empty()){
+            p = S.top(); //令p为栈顶指针，注意栈顶指针没有出栈。
+            if(p->left == nullptr && p->right == nullptr){  //只有当栈顶指针的左右子树
+                ans.push_back(p->val);                      //都为空时，才输出数值，
+                S.pop();                                    //此时才出栈。
+            }
+            else{
+                if(p->right){ //否则如果右子树不空入栈，因为是后续遍历，所以先把右子入栈
+                    S.push(p->right);
+                    p->right = NULL;//之所以右子树让其为空，是防止重复操作，防止再次入栈
+                }
+                if(p->left){//接着就可以把左子树入栈了
+                    S.push(p->left);
+                    p->left = NULL;//同样的道理防止重复入栈。
+                }
+            }
+            
+        }
+          return ans;
+    }
+      
+    };
+    //迭代版本（2）
+    class Solution {
+public:
+
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        stack<TreeNode*> S;
+        TreeNode* p = root;
+        TreeNode* q = nullptr;
+        do{
+            while(p != nullptr){
+                S.push(p);
+                p = p->left;//沿着左子树一直进行到底
+            }
+            q = nullptr;
+            while(!S.empty()){
+                p = S.top();
+                S.pop();
+                if(p->right == q){ //如果右子树是空或者已经访问过，就可以访问数据了
+                   ans.push_back(p->val);
+                    q = p; //用q记住p，说明p已经访问过了
+                }
+                else{ //如果不满足上述条件就入栈
+                    S.push(p);
+                    p = p->right;//右子树入栈后要跳出循环，然后继续上边的过程，再半段左子树是否存在
+                    break;      //左子树存在就入栈
+                }
+            }
+        }while(!S.empty());
+        return ans;
+    }
+      
+    };
