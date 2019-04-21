@@ -1,0 +1,18 @@
+//easy understand but run slow
+class Solution {
+public:
+    int findJudge(int N, vector<vector<int>>& trust) {
+        unordered_set<int> trusters; //trust orther people
+        unordered_map<int, int> trusteeCount; //the times of trusted by orther people
+        int i = 0;
+        for(i = 0; i < trust.size(); ++i){
+           trusters.insert(trust[i][0]);
+            trusteeCount[trust[i][1]]++;
+        }
+        for(i = 1; i <= N; ++i){
+            if(trusters.count(i) == 0 && trusteeCount[i] == N - 1)
+                return i;
+        }
+        return -1;
+    }
+};
