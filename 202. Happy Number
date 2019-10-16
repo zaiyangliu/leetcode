@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool isHappy(int n) {
+        set<int> s;
+        if(n <= 0) return false;
+        if(n == 1) return true;
+        while(s.find(n) == s.end()){
+            s.insert(n);
+            n = calcuate(n);
+            if(n == 1) return true;
+        }
+        return false;
+    }
+private:
+    int calcuate(int n){
+        int sum = 0;
+        while(n){
+            sum += pow(n%10, 2);
+            n = n / 10;
+        }
+        return sum;
+    }
+};
