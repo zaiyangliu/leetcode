@@ -1,0 +1,54 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+private: int sum = 0;
+public:
+    TreeNode* convertBST(TreeNode* root) {
+        if(root != 0){
+            convertBST(root->right);
+            sum += root->val;
+            root->val = sum;
+            convertBST(root->left);
+        }
+        return root;
+    }
+};
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* convertBST(TreeNode* root) {
+        if(!root) return NULL;
+        long sum = 0;
+        stack<TreeNode*> st;
+        TreeNode* p = root;
+        while(p || !st.empty()){
+            while(p){
+                st.push(p);
+                p = p->right;
+            }
+            p = st.top();
+            st.pop();
+            p->val += sum;
+            sum = p->val;
+            p = p->left;
+        }
+        return  root;
+    }
+};
